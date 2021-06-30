@@ -16,9 +16,14 @@ io.on("connection", (socket: Socket) => {
     });
 
     socket.on("room", room => {
+
+        socket.rooms.forEach(userRoom => {
+            socket.leave(userRoom);
+        })
+
         socket.join(room);
+
         if (rooms[room]) {
-            console.log(rooms[room].text);
             socket.emit('editing', rooms[room].text);
         }
     });
