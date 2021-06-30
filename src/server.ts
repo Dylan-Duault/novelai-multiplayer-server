@@ -29,8 +29,10 @@ io.on("connection", (socket: Socket) => {
     });
 
     socket.on("editing", data => {
-        rooms[data.room] = {text: data.text};
-        socket.broadcast.to(data.room).emit('editing', data.text);
+        if (data.room) {
+            rooms[data.room] = {text: data.text};
+            socket.broadcast.to(data.room).emit('editing', data.text);
+        }
     });
 
 });
